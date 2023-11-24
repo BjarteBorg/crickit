@@ -1,3 +1,5 @@
+kamper = matches.csv
+
 with open(kamper) as fil:
     x = fil.readline()
     x = x.split(',')
