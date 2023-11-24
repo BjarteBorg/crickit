@@ -1,4 +1,5 @@
-kamper = matches.csv
+matplotlib.pyplot as plt
+kamper = 'matches.csv'
 
 with open(kamper) as fil:
     x = fil.readline()
