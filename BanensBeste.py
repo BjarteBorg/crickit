@@ -46,6 +46,8 @@ with open(kamper) as fil:
            
             ordbok[x[1]]['Banens beste'] = {}
         try:
-            ordbok[x[1]]['Banens beste'][x[BanensBeste]] += 1
+            if not x[BanensBeste] == '':
+                ordbok[x[1]]['Banens beste'][x[BanensBeste]] += 1
         except:
-            ordbok[x[1]]['Banens beste'][x[BanensBeste]] = 1
+            if not x[BanensBeste] == '':
+                ordbok[x[1]]['Banens beste'][x[BanensBeste]] = 1
