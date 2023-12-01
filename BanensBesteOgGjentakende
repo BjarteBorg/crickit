@@ -52,7 +52,7 @@ def BanensBestePlot(Start, Antall):
 
     '''her'''
 
-    gjentagende = sorted(gjentagende, key=lambda x: -x[-1])
+    gjentagende = sorted(gjentagende, key=lambda x: -x[-2])
     #print(gjentagende)
     for n in range(len(gjentagende)):
         gjentagende[n][2] = round(gjentagende[n][2]/gjentagende[n][1], 3)
@@ -79,7 +79,7 @@ def BanensBestePlot(Start, Antall):
     else:
         plt.text(0, -0.08, 'Totalt blir ' + str(len(liste)) + ' spillere kåret til banens beste.')
 
-
+    
  
 with open(kamper) as fil:
     x = fil.readline()
@@ -102,4 +102,4 @@ with open(kamper) as fil:
             if not x[BanensBeste] == '':
                 ordbok[x[1]]['Banens beste'][x[BanensBeste]] = 1
                 
-BanensBestePlot(2008, 4) #startår og antall år
+BanensBestePlot(2008, 10) #startår og antall år
