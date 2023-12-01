@@ -1,0 +1,44 @@
+import matplotlib.pyplot as plt
+kamper = 'matches.csv'
+
+
+
+with open(kamper) as fil:
+    x = fil.readline()
+    x = x.split(',')
+    ordbok = {}
+    BanensBeste = x.index('player_of_match')
+    by = x.index('city')
+    for x in fil:
+        x = x.split(',')
+        try:
+            ordbok[x[1]]['AntallKamper'] += 1
+        except:
+            ordbok[x[1]] = {}
+            ordbok[x[1]]['Aar'] = x[1]
+            ordbok[x[1]]['AntallKamper'] = 1
+            ordbok[x[1]]['Banens beste'] = {}
+            ordbok[x[1]]['Byer'] = {}
+            
+        try:
+            if not x[BanensBeste] == '':
+                ordbok[x[1]]['Banens beste'][x[BanensBeste]] += 1
+        except:
+            if not x[BanensBeste] == '':
+                ordbok[x[1]]['Banens beste'][x[BanensBeste]] = 1
+                
+                      
+        try:
+            if not x[by] == '':
+                ordbok[x[1]]['Byer'][x[by]] += 1
+        except:
+            if not x[by] == '':
+                ordbok[x[1]]['Byer'][x[by]] = 1
+
+                
+
+def byer(Aar):
+    Aar = str(Aar)
+    plt.bar(ordbok[Aar]['Byer'].keys(), ordbok[Aar]['Byer'].values())
+               
+byer(2008)
