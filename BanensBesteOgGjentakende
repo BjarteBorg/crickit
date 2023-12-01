@@ -1,0 +1,105 @@
+import matplotlib.pyplot as plt
+kamper = 'matches.csv'
+ 
+ 
+def BanensBestePlot(Start, Antall):
+    Aar = []
+    for i in range(Antall):
+        Aar.append(Start+i)
+    global liste
+    global liste2
+    
+    liste = []
+    liste2 = []
+    
+    '''her'''
+    gjentagende = []
+    '''til her'''
+    
+    for x in ordbok[str(Aar[0])]['Banens beste'].items():
+        liste.append([x[0], x[1]])
+        liste2.append(x[0])
+
+    for i in range(len(Aar)-1):
+        for y in ordbok[str(Aar[i+1])]['Banens beste'].items():
+            if y[0] in liste2:
+                liste[liste2.index(y[0])][1] += y[1]
+                
+                '''her'''
+                aktiv = False
+                
+                for pers in range(len(gjentagende)):
+                    if y[0] in gjentagende[pers]:
+                        gjentagende[pers][1] += 1
+                        gjentagende[pers][2] += y[1]
+                        aktiv = True                
+                if aktiv == False:
+                    gjentagende.append([y[0], 2, y[1]])
+                '''til her'''
+                
+            else:
+                liste.append([y[0], y[1]])
+                liste2.append(y[0])
+
+
+
+    
+    liste = sorted(liste, key=lambda x: -x[-1])
+    a = liste[10][-1]
+    b = sum(x[-1] == a for x in liste)
+    c = sum(x[-1] == a for x in liste[:10])
+    
+
+    '''her'''
+
+    gjentagende = sorted(gjentagende, key=lambda x: -x[-1])
+    #print(gjentagende)
+    for n in range(len(gjentagende)):
+        gjentagende[n][2] = round(gjentagende[n][2]/gjentagende[n][1], 3)
+    gjentagende.insert(0, ['Navn', 'År med banens beste', 'Snitt i disse'])
+    plt.subplots(1,1, figsize = (6, 8))
+    plt.table(cellText=gjentagende[:10], loc = 'center', bbox=[0, 0, 1, 1])
+    plt.axis('off')
+    plt.title('10 spillerne med banens beste i flest ulike år mellom ' + str(Aar[0]) + " og " + str(Aar[len(Aar)-1]))
+    '''til her'''
+        
+
+
+
+    plt.subplots(1,1, figsize = (6, 8))
+    plt.table(cellText=liste[:10], loc = 'center', bbox=[0, 0, 1, 1])
+    plt.axis('off')
+    plt.title('De 10 spillerne med flest banens beste kåringer mellom ' + str(Aar[0]) + " og " + str(Aar[len(Aar)-1]))
+    if b-c == 1:
+        plt.text(0, -0.04, 'Det er en spiller til med ' + str(a) + ' kåringer.')
+        plt.text(0, -0.08, 'Totalt blir ' + str(len(liste)) + ' spillere kåret til banens beste.')
+    elif b-c > 1:
+        plt.text(0, -0.04, 'Det er ' + str(b-c) + ' flere spillere med ' + str(a) + ' kåringer.')
+        plt.text(0, -0.08, 'Totalt blir ' + str(len(liste)) + ' spillere kåret til banens beste.')
+    else:
+        plt.text(0, -0.08, 'Totalt blir ' + str(len(liste)) + ' spillere kåret til banens beste.')
+
+
+ 
+with open(kamper) as fil:
+    x = fil.readline()
+    x = x.split(',')
+    ordbok = {}
+    BanensBeste = x.index('player_of_match')
+    for x in fil:
+        x = x.split(',')
+        try:
+            ordbok[x[1]]['AntallKamper'] += 1
+        except:
+            ordbok[x[1]] = {}
+            ordbok[x[1]]['Aar'] = x[1]
+            ordbok[x[1]]['AntallKamper'] = 1
+            ordbok[x[1]]['Banens beste'] = {}
+        try:
+            if not x[BanensBeste] == '':
+                ordbok[x[1]]['Banens beste'][x[BanensBeste]] += 1
+        except:
+            if not x[BanensBeste] == '':
+                ordbok[x[1]]['Banens beste'][x[BanensBeste]] = 1
+                
+BanensBestePlot(2008, 4) #startår og antall år
