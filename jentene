@@ -54,6 +54,5 @@ def byer(*Aar):
     except:
         Aar = str(Aar)
         plt.barh(ordbok[Aar]['Byer'].keys(), ordbok[Aar]['Byer'].values())
-    print(liste1, liste2)
     
 byer(2008)
