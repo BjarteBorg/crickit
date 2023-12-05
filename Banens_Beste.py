@@ -28,13 +28,15 @@ def BanensBestePlot(*Aar):
             print('Flere enn en')
                   
     liste = sorted(liste, key=lambda x: -x[-1])
-    a = liste[10][-1]
+    a = liste[9][-1]
+    print(a)
     b = sum(x[-1] == a for x in liste)
+    print(b)
     c = sum(x[-1] == a for x in liste[:10])
+    print(c)
        
     for i in range(10):
         q = SpillerLag(liste[i][0], [x for x in Aar])
-        print(q)
         liste[i].append(liste[i][-1])
         sgjk = ''
         for j in range(len(q)):
@@ -50,14 +52,23 @@ def BanensBestePlot(*Aar):
     
 
     if len(Aar) > 1:
-        plt.subplots(1,1, figsize = (12, 8)) 
-        liste.insert(0, ['Spiller', 'Lag', 'Kåringer', 'Kåringer per aktive år'])
-        plt.table(cellText=liste[:11], loc = 'center', bbox=[0, 0, 1, 1], colWidths=[2, 4.5, 0.9, 1.5])
+        plt.subplots(1,1, figsize = (12, 8))
+        kolonne = ['Spiller', 'Lag', 'Kåringer', 'Kåringer per aktive år']
+        plt.table(cellText=liste[:10], 
+                  loc = 'center', bbox=[0, 0, 1, 1], 
+                  colWidths=[2, 4.5, 0.9, 1.5], 
+                  colLabels=kolonne,
+                  colColours=['gray', 'gray', 'gray', 'gray'],
+                  cellLoc = 'left')
         plt.title('De 10 spillerne med flest banens beste kåringer fra ' + str(Aar[0]) + " til " + str(Aar[-1]), size=15)
     else:
         plt.subplots(1,1, figsize = (8, 8)) 
-        liste.insert(0, ['Spiller', 'Lag', 'Kåringer'])
-        plt.table(cellText=liste[:11], loc = 'center', bbox=[0, 0, 1, 1], colWidths=[2, 2, 0.9])
+        kolonne = ['Spiller', 'Lag', 'Kåringer']
+        plt.table(cellText=liste[:10],
+                  loc = 'center', bbox=[0, 0, 1, 1],
+                  colWidths=[2, 2, 0.9], 
+                  colLabels=kolonne, colColours=['gray', 'gray', 'gray'], 
+                  cellLoc = 'left')
         plt.title('De 10 spillerne med flest banens beste kåringer i ' + str(Aar[0]), size=15)
         
     plt.axis('off')
@@ -69,6 +80,7 @@ def BanensBestePlot(*Aar):
         plt.text(0, -0.08, 'Totalt blir ' + str(len(liste)) + ' spillere kåret til banens beste.')
     else:
         plt.text(0, -0.08, 'Totalt blir ' + str(len(liste)) + ' spillere kåret til banens beste.')
+   
     
 def SpillerLag(spiller, Aar):
     liste = []
@@ -102,6 +114,7 @@ def AarSpilt(Spiller, Aar):
                 antall += 1
                 
     return antall
+
 
 with open(kamper) as fil:
     x = fil.readline()
@@ -140,7 +153,6 @@ with open(kamper) as fil:
             kamp_id[x[season]] = []
             kamp_id[x[season]].append(int(x[kamp]))
             
-
 
 with open('deliveries.csv') as fil:
     x = fil.readline().split(',')
@@ -189,4 +201,4 @@ with open('deliveries.csv') as fil:
                 lag[aar][x[lag2]].append(x[fielder])
             
             
-BanensBestePlot(2008, 2013)
+BanensBestePlot(2008, 2017)
