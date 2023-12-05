@@ -35,10 +35,25 @@ with open(kamper) as fil:
             if not x[by] == '':
                 ordbok[x[1]]['Byer'][x[by]] = 1
 
-                
 
-def byer(Aar):
-    Aar = str(Aar)
-    plt.bar(ordbok[Aar]['Byer'].keys(), ordbok[Aar]['Byer'].values())
-               
+
+
+def byer(*Aar):
+    liste1 = []
+    liste2 = []
+    try: 
+        for x in Aar:
+            x = str(x)
+            for y in ordbok[x]['Byer'].items():
+                if not y[0] in liste1:
+                    liste1.append(y[0])
+                    liste2.append(y[1])
+                else:
+                    liste2[liste1.index(y[0])] += y[1]
+        plt.barh(liste1, liste2)
+    except:
+        Aar = str(Aar)
+        plt.barh(ordbok[Aar]['Byer'].keys(), ordbok[Aar]['Byer'].values())
+    print(liste1, liste2)
+    
 byer(2008)
