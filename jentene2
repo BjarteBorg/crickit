@@ -1,1 +1,79 @@
+import matplotlib.pyplot as plt
+kamper = 'matches.csv'
 
+
+
+with open(kamper) as fil:
+    x = fil.readline()
+    x = x.split(',')
+    ordbok = {}
+    BanensBeste = x.index('player_of_match')
+    by = x.index('city')        
+    
+    ordbok['Alle'] = {}        
+    ordbok['Alle']['Aar'] = 'Alle'
+    ordbok['Alle']['AntallKamper'] = 0
+    ordbok['Alle']['Banens beste'] = {}
+    ordbok['Alle']['Byer'] = {}
+    
+    for x in fil:
+        x = x.split(',')
+
+        try:
+            if not x[BanensBeste] == '':
+                ordbok['Alle']['Banens beste'][x[BanensBeste]] += 1
+        except:
+            if not x[BanensBeste] == '':
+                ordbok['Alle']['Banens beste'][x[BanensBeste]] = 1
+        try:
+            if not x[by] == '':
+                ordbok['Alle']['Byer'][x[by]] += 1
+        except:
+            if not x[by] == '':
+                ordbok['Alle']['Byer'][x[by]] = 1
+                
+        try:
+            ordbok[x[1]]['AntallKamper'] += 1
+        except:
+            ordbok[x[1]] = {}
+            ordbok[x[1]]['Aar'] = x[1]
+            ordbok[x[1]]['AntallKamper'] = 1
+            ordbok[x[1]]['Banens beste'] = {}
+            ordbok[x[1]]['Byer'] = {}
+            
+        try:
+            if not x[BanensBeste] == '':
+                ordbok[x[1]]['Banens beste'][x[BanensBeste]] += 1
+        except:
+            if not x[BanensBeste] == '':
+                ordbok[x[1]]['Banens beste'][x[BanensBeste]] = 1
+                
+                      
+        try:
+            if not x[by] == '':
+                ordbok[x[1]]['Byer'][x[by]] += 1
+        except:
+            if not x[by] == '':
+                ordbok[x[1]]['Byer'][x[by]] = 1
+
+
+
+
+def byer(*Aar):
+    liste1 = []
+    liste2 = []
+    try: 
+        for x in Aar:
+            x = str(x)
+            for y in ordbok[x]['Byer'].items():
+                if not y[0] in liste1:
+                    liste1.append(y[0])
+                    liste2.append(y[1])
+                else:
+                    liste2[liste1.index(y[0])] += y[1]
+        plt.barh(liste1, liste2)
+    except:
+        Aar = str(Aar)
+        plt.barh(ordbok[Aar]['Byer'].keys(), ordbok[Aar]['Byer'].values())
+    
+byer('Alle')
