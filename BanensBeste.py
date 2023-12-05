@@ -30,7 +30,7 @@ def BanensBestePlot(*Aar):
             print('Flere enn en')
                   
     liste = sorted(liste, key=lambda x: -x[-1])
-    a = liste[10][-1]
+    a = liste[9][-1]
     b = sum(x[-1] == a for x in liste)
     c = sum(x[-1] == a for x in liste[:10])
        
