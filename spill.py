@@ -26,7 +26,7 @@ with open(kamper) as fil:
 
 def start():
     Aar = [2008 + i for i in range(10)]
-    print(Aar)
+    # print(Aar)
     while True:
         try:
             a = input('Sett inn året/årene du vil spille:').split()
@@ -41,8 +41,27 @@ def start():
     poeng = 0
     liste = spillere(a)
     tall = int(r.random()*len(liste))
-    runde(liste[tall][0], liste[tall][1], poeng, liste)
     
+    runde(liste[tall][0], liste[tall][1], poeng, liste)
+  
+    
+  
+def spillere(a):
+    spillere = {}
+    for x in a:
+        for y in ordbok[str(x)]['Banens beste'].items():
+            try:
+                spillere[y[0]] += y[1]
+            except:
+                spillere[y[0]] = y[1]
+    
+    liste = []
+    for x in spillere.items():
+        liste.append([x[0], x[1]])
+        
+    return liste
+
+
 
 def runde(spiller, spillertall, poeng, liste):
     print('\n' + '*************************************')
@@ -68,7 +87,8 @@ def runde(spiller, spillertall, poeng, liste):
         try:
             b = input('Hvilken spiller har flest kåringer?')
             b = int(b)
-            break
+            if b in [1, 2]:
+                break
         except:
             b = 0
     
@@ -81,6 +101,7 @@ def runde(spiller, spillertall, poeng, liste):
     else:
         ferdig(liste[tall][0], liste[tall][1], poeng)
         
+        
 
 def ferdig(spiller, spillertall, poeng):
     print('\n' + '*************************************')
@@ -90,20 +111,5 @@ def ferdig(spiller, spillertall, poeng):
      
     
     
-
-def spillere(a):
-    spillere = {}
-    for x in a:
-        for y in ordbok[str(x)]['Banens beste'].items():
-            try:
-                spillere[y[0]] += y[1]
-            except:
-                spillere[y[0]] = y[1]
-    
-    liste = []
-    for x in spillere.items():
-        liste.append([x[0], x[1]])
-        
-    return liste
             
 start()
