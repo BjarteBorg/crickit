@@ -51,6 +51,7 @@ def byer(*Aar):
                 liste2[liste1.index(y[0])] += y[1]
                 
                 
+    plt.figure(figsize=(5,6))
     plt.barh(liste1, liste2)
     plt.grid(axis = 'x')
     if Aar[0] == 'Alle':
