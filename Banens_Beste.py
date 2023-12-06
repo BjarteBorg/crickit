@@ -22,31 +22,25 @@ def BanensBestePlot(*Aar):
             else:
                 liste.append([y[0], y[1]])
                 liste2.append(y[0])
-    
-    for a in liste2:
-        if liste2.count(a) > 1:
-            print('Flere enn en')
+
                   
     liste = sorted(liste, key=lambda x: -x[-1])
     a = liste[9][-1]
-    print(a)
     b = sum(x[-1] == a for x in liste)
-    print(b)
     c = sum(x[-1] == a for x in liste[:10])
-    print(c)
        
     for i in range(10):
         q = SpillerLag(liste[i][0], [x for x in Aar])
         liste[i].append(liste[i][-1])
-        sgjk = ''
+        p = ''
         for j in range(len(q)):
             if j == len(q)-1 and len(q) != 1:
-                sgjk += f' og {q[j]}'
+                p += f' og {q[j]}'
             elif j != 0:
-                sgjk += f', {q[j]}'
+                p += f', {q[j]}'
             else:
-                sgjk += q[j]
-        liste[i][1] = sgjk
+                p += q[j]
+        liste[i][1] = p
         if len(Aar) > 1:
             liste[i].append(round(liste[i][-1]/AarSpilt(liste[i][0], Aar), 3))
     
@@ -90,7 +84,6 @@ def SpillerLag(spiller, Aar):
                 liste.append(y[0])
     
     liste2 = []
-    
     for x in liste:
         if x == 'Rising Pune Supergiants' and 'Rising Pune Supergiant' in liste:
             continue
@@ -201,4 +194,4 @@ with open('deliveries.csv') as fil:
                 lag[aar][x[lag2]].append(x[fielder])
             
             
-BanensBestePlot(2008, 2017)
+BanensBestePlot(2008)
